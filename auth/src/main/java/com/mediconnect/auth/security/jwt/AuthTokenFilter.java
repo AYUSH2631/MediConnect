@@ -1,23 +1,23 @@
 package com.mediconnect.auth.security.jwt;
 
 
-import java.io.IOException; // Import IOException for handling input/output exceptions
+import java.io.IOException;
 
 import com.mediconnect.auth.security.services.UserDetailsServiceImpl;
-import jakarta.servlet.FilterChain; // Import FilterChain for handling filter chains
-import jakarta.servlet.ServletException; // Import ServletException for servlet-related exceptions
-import jakarta.servlet.http.HttpServletRequest; // Import HttpServletRequest for handling HTTP requests
-import jakarta.servlet.http.HttpServletResponse; // Import HttpServletResponse for handling HTTP responses
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger; // Import Logger for logging errors and information
-import org.slf4j.LoggerFactory; // Import LoggerFactory for creating Logger instances
-import org.springframework.beans.factory.annotation.Autowired; // Import Autowired for dependency injection
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; // Import for creating authentication tokens
-import org.springframework.security.core.context.SecurityContextHolder; // Import for managing security context
-import org.springframework.security.core.userdetails.UserDetails; // Import for user details
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource; // Import for authentication details
-import org.springframework.util.StringUtils; // Import StringUtils for string utility methods
-import org.springframework.web.filter.OncePerRequestFilter; // Import OncePerRequestFilter to ensure the filter is applied once per request
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 
 public class AuthTokenFilter extends OncePerRequestFilter {
