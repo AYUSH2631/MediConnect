@@ -4,15 +4,19 @@ package com.mediconnect.auth;
 import com.mediconnect.auth.Models.Role;
 import com.mediconnect.auth.Models.UserRole;
 import com.mediconnect.auth.Repository.RoleRepository;
-import com.mediconnect.auth.Repository.UserRepository;
 import com.mediconnect.auth.Services.AuthService;
 import com.mediconnect.auth.payload.request.SignupRequest;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
+
 
 @Component
 public class DataInitializer {
@@ -22,51 +26,86 @@ public class DataInitializer {
 
     @Bean
     public CommandLineRunner initializeData(RoleRepository roleRepository,
-                                            UserRepository userRepository) {
+                                            MongoTemplate mongoTemplate) {
         return args -> {
-            if (roleRepository.count() == 0) {
-                roleRepository.save(new Role(UserRole.ROLE_ADMIN));
-                roleRepository.save(new Role(UserRole.ROLE_DOCTOR));
-                roleRepository.save(new Role(UserRole.ROLE_PATIENT));
-                System.out.println("Created default roles.");
+
+            if (!mongoTemplate.collectionExists("roles")
+                    || mongoTemplate.findAll
+                    (Role.class, "roles").isEmpty()) {
+
+                Role adminRole = new Role(UserRole.ROLE_ADMIN);
+                roleRepository.save(adminRole);
+                System.out.println("Created ROLE_ADMIN");
+
+                Role doctorRole = new Role(UserRole.ROLE_DOCTOR);
+                roleRepository.save(doctorRole);
+                System.out.println("Created ROLE_DOCTOR");
+
+                Role patientRole = new Role(UserRole.ROLE_PATIENT);
+                roleRepository.save(patientRole);
+                System.out.println("Created ROLE_PATIENT");
             } else {
-                System.out.println(" Roles already exist. Skipping role creation.");
+                System.out.println("Roles already exist. Skipping role creation.");
             }
 
-            if (userRepository.count() == 0) {
+            if (!mongoTemplate.collectionExists("users")) {
                 SignupRequest adminUser = new SignupRequest(
                         "admin",
-                        "admin@gmail.com",
-                        Set.of("admin"),
-                        "Admin@123"
+                        "mediconnectadmin@gmail.com",
+                        new HashSet<>(List.of("admin")),
+                        "admin123"
                 );
-
                 SignupRequest doctorUser = new SignupRequest(
                         "doctor",
-                        "doctor@gmail.com",
-                        Set.of("doctor"),
-                        "Doctor@123"
+                        "mediconnectdoctor@gmail.com",
+                        new HashSet<>(List.of("doctor")),
+                        "doctor123"
                 );
-
                 SignupRequest patientUser = new SignupRequest(
                         "patient",
-                        "patient@gmail.com",
-                        Set.of("patient"),
-                        "Patient@123"
+                        "mediconnectpatient@gmail.com",
+                        new HashSet<>(List.of("patient")),
+                        "patient123"
                 );
 
                 authService.registerUser(adminUser);
                 authService.registerUser(doctorUser);
                 authService.registerUser(patientUser);
-
-                System.out.println("Default users created.");
             } else {
                 System.out.println("Users already exist. Skipping user creation.");
             }
 
+            if (!mongoTemplate.collectionExists("doctors")) {
+                Document doctor = new Document()
+                        .append("firstName", "Sample")
+                        .append("lastName", "Doctor")
+                        .append("email", "mediconnectdoctor@gmail.com")
+                        .append("phone", "123456789")
+                        .append("speciality", "ENT, General Medicine")
+                        .append("yearsOfExperience", 2)
+                        .append("status", "AVAILABLE")
+                        .append("_id", UUID.randomUUID().toString());
+                mongoTemplate.insert(doctor, "doctors");
+                System.out.println("Inserted sample doctor data.");
+            } else {
+                System.out.println("Doctors collection already exists. Skipping insertion.");
+            }
 
+            if (!mongoTemplate.collectionExists("patients")) {
+                Document patient = new Document()
+                        .append("firstName", "Sample")
+                        .append("lastName", "Patient")
+                        .append("email", "mediconnect@gmail.com")
+                        .append("phone", "123456789")
+                        .append("age", 20)
+                        .append("_id", UUID.randomUUID().toString());
+                mongoTemplate.insert(patient, "patients");
+                System.out.println("Inserted sample patient data.");
+            } else {
+                System.out.println("Patients collection already exists. Skipping insertion.");
+            }
 
-            System.out.println(" Data initialization complete!");
+            System.out.println("Data initialization complete!");
         };
     }
 }
