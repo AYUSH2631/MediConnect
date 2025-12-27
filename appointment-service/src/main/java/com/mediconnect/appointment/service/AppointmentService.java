@@ -10,7 +10,6 @@ import com.mediconnect.appointment.model.Patient;
 import com.mediconnect.appointment.payload.request.AppointmentRequest;
 import com.mediconnect.appointment.payload.response.GenericResponse;
 import com.mediconnect.appointment.repository.AppointmentRepository;
-import jakarta.websocket.SendResult;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +23,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import tools.jackson.databind.ObjectMapper;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -114,7 +111,7 @@ public class AppointmentService {
                 throw new ResourceNotFoundException("Doctor not found with ID: " + appointment.getDoctorId());
             }
 
-\            Map<String, Object>  patient = restTemplate.getForObject(patientServiceUrl + "/" + appointment.getPatientId(), Map.class);
+            Map<String, Object>  patient = restTemplate.getForObject(patientServiceUrl + "/" + appointment.getPatientId(), Map.class);
             if (patient == null || patient.isEmpty()) {
                 throw new ResourceNotFoundException("Patient not found with ID: " + appointment.getPatientId());
             }
