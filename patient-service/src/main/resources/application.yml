@@ -8,12 +8,15 @@ spring:
         enabled: true
         instance:
           name: Patient Service
-          service-url: http://patient-service:8080
-        url: http://admin-service:8080
+          service-url: http://localhost:8082
+          management-url: http://localhost:8082/actuator
+          health-url: http://localhost:8082/actuator/health
+        url: http://localhost:8080   # Admin server
         auto-registration: true
+
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      uri: mongodb://localhost:27017/patientdb
 
 logging:
   level:
@@ -21,14 +24,13 @@ logging:
       springframework:
         web: DEBUG
         servlet: DEBUG
+    de.codecentric.boot.admin.client: DEBUG   # enable admin client logs
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-      enable:
-        include: health
 
 server:
-  port: ${PATIENT_SERVICE_PORT:8080}
+  port: 8082

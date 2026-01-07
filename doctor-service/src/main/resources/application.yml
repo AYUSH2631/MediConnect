@@ -8,13 +8,13 @@ spring:
         enabled: true
         instance:
           name: Doctor Service
-          service-url: http://doctor-service:8080
-        url: http://admin-service:8080
+          service-url: http://localhost:8083
+        url: http://localhost:8080
         auto-registration: true
 
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      uri: mongodb://localhost:27017/doctordb
 
 logging:
   level:
@@ -32,4 +32,4 @@ management:
         include: health
 
 server:
-  port: 8080
+  port: 8083

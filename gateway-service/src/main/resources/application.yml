@@ -16,6 +16,13 @@ spring:
             allowedHeaders: "*"
             allowCredentials: true
 
+      # Sample route so you can see it in Admin UI
+      routes:
+        - id: sample-route
+          uri: https://httpbin.org
+          predicates:
+            - Path=/test/**
+
   application:
     name: gateway-service
 
@@ -23,11 +30,13 @@ spring:
     admin:
       client:
         enabled: true
+        url: http://localhost:8080                  # Admin server URL
         instance:
           name: Gateway Service
-          service-url: http://gateway-service:8080
-        url: http://admin-service:8080
-        auto-registration: true
+          service-url: http://localhost:8081       # Gateway base URL
+          management-url: http://localhost:8081/actuator
+          health-url: http://localhost:8081/actuator/health
+          auto-registration: true
 
   main:
     web-application-type: reactive
@@ -41,11 +50,9 @@ management:
     web:
       exposure:
         include: "*"
-      enable:
-        include: health
 
 server:
-  port: ${GATEWAY_SERVICE_PORT}
+  port: 8081
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:my-very-strong-jwt-secret-key-256-bit-long!!}
