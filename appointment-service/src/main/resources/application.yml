@@ -17,16 +17,16 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/appoinmentdb
+      uri: mongodb://localhost:27017/appointmentdb
 
   kafka:
     producer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     topic:
-      name: ${KAFKA_TOPIC}
+      name: ${KAFKA_TOPIC:appointment-events}
 
 logging:
   level:

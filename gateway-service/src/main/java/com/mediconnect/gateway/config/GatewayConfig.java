@@ -34,7 +34,7 @@ public class GatewayConfig {
                                     return chain.filter(exchange);
                                 })
                         )
-                        .uri("http://doctor-service:8080"))
+                        .uri("http://localhost:8083"))
 
                 .route("patient-service", r -> r.path("/api/v1/patient/**")
                         .filters(f -> f
@@ -48,7 +48,7 @@ public class GatewayConfig {
                                     return chain.filter(exchange);
                                 })
                         )
-                        .uri("http://patient-service:8080"))
+                        .uri("http://localhost:8082"))
 
                 .route("appointment-service", r -> r.path("/api/v1/appointments/**")
                         .filters(f -> f
@@ -62,7 +62,7 @@ public class GatewayConfig {
                                     return chain.filter(exchange);
                                 })
                         )
-                        .uri("http://appointment-service:8080"))
+                        .uri("http://localhost:8084"))
 
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .filters(f -> f
@@ -76,7 +76,7 @@ public class GatewayConfig {
                                     return chain.filter(exchange);
                                 })
                         )
-                        .uri("http://auth-service:8080"))
+                        .uri("http://localhost:8086"))
 
                 .build();
     }

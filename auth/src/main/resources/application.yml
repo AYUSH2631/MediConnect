@@ -8,13 +8,13 @@ spring:
         enabled: true
         instance:
           name: Auth Service
-          service-url: http://auth-service:8080
-        url: http://admin-service:8080
+          service-url: http://localhost:8086
+        url: http://localhost:8080
         auto-registration: true
 
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      uri: mongodb://localhost:27017/authdb
 
 logging:
   level:
@@ -30,8 +30,8 @@ management:
         include: health
 
 server:
-  port: 8080
+  port: 8086
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: your-secret-key
   expiration: 86400000
