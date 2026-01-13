@@ -21,14 +21,10 @@ import { spinnerContext } from "../Spinner/spinnerContext";
 const Doctors = () => {
   // State to store the list of doctors
   const [doctors, setDoctors] = useState([]);
-  // State to store the appointments of a selected doctor
   const [appointments, setAppointments] = useState([]);
-  // State to control the visibility of the popup
   const [showModal, setShowModal] = useState(false);
-  // Access the spinner context to show/hide loading indicators
   const { setShowSpinner } = useContext(spinnerContext);
 
-  // useEffect to fetch the list of doctors when the component loads
   useEffect(() => {
     setShowSpinner(true);
     getAllDoctors()

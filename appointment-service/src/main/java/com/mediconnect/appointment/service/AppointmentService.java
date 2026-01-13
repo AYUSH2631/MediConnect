@@ -183,7 +183,7 @@ public class AppointmentService {
                     doctorId,
                     "John",
                     "Doe",
-                    "doctorhungrycoders@gmail.com",
+                    "doctorMediConnect@gmail.com",
                     "1234567890",
                     "Cardiology",
                     10,

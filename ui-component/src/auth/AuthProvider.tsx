@@ -5,7 +5,6 @@ import { setNavigate } from "../services/navigateUtil";
 import { getDoctorByEmail, getPatientByEmail } from "../services/service";
 
 const AuthProvider = ({ children }: any) => {
-  // State to manage user, auth details, token, and user role from local storage.
   const [user, setUser] = useState(localStorage.getItem("user") || null);
   const [auth, setAuth] = useState<any>(localStorage.getItem("auth") || null);
   const [token, setToken] = useState(localStorage.getItem("jwt") || null);
@@ -14,7 +13,6 @@ const AuthProvider = ({ children }: any) => {
   );
   const navigate = useNavigate();
 
-  // Fetch user details if token and auth exist or token changes
   useEffect(() => {
     if (token && auth) {
       if (typeof auth === "string") {
@@ -25,12 +23,10 @@ const AuthProvider = ({ children }: any) => {
     }
   }, [token]);
 
-  // Set global navigation utility whenever navigate changes.
   useEffect(() => {
     setNavigate(navigate);
   }, [navigate]);
 
-  // Fetch user details based on role and save it to state and local storage for furthur use.
   const fetchUser = async (email) => {
     try {
       if (userRole === "ROLE_DOCTOR") {
@@ -51,7 +47,6 @@ const AuthProvider = ({ children }: any) => {
     }
   };
 
-  // Login function to set user session states, store in localstorage and navigate to home screen.
   const login = (res: any) => {
     setUserRole(res.roles[0]);
     setToken(res.token);
@@ -63,7 +58,6 @@ const AuthProvider = ({ children }: any) => {
     if(res.roles[0] === "ROLE_ADMIN") navigate("/");
   };
 
-  // Logout function to update states and delete details stored in localstorage (navigate back to login screen)
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -76,7 +70,6 @@ const AuthProvider = ({ children }: any) => {
   };
   return (
     <AuthContext.Provider
-      // Drilling down the values to child components
       value={{
         user: typeof user === "string" ? JSON.parse(user) : user,
         token,

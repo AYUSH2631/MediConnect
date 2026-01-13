@@ -11,7 +11,7 @@ spring:
           service-url: http://localhost:8082
           management-url: http://localhost:8082/actuator
           health-url: http://localhost:8082/actuator/health
-        url: http://localhost:8080   # Admin server
+        url: http://localhost:8081   # Admin server
         auto-registration: true
 
   data:

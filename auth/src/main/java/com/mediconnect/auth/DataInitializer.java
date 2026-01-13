@@ -21,7 +21,7 @@ import java.util.UUID;
 @Component
 public class DataInitializer {
 
-    @Autowired
+ /*   @Autowired
     private AuthService authService;
 
     @Bean
@@ -52,19 +52,16 @@ public class DataInitializer {
                 SignupRequest adminUser = new SignupRequest(
                         "admin",
                         "mediconnectadmin@gmail.com",
-                        new HashSet<>(List.of("admin")),
                         "admin123"
                 );
                 SignupRequest doctorUser = new SignupRequest(
                         "doctor",
                         "mediconnectdoctor@gmail.com",
-                        new HashSet<>(List.of("doctor")),
                         "doctor123"
                 );
                 SignupRequest patientUser = new SignupRequest(
                         "patient",
                         "mediconnectpatient@gmail.com",
-                        new HashSet<>(List.of("patient")),
                         "patient123"
                 );
 
@@ -107,5 +104,5 @@ public class DataInitializer {
 
             System.out.println("Data initialization complete!");
         };
-    }
+    }*/
 }

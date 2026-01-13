@@ -18,6 +18,8 @@ import {
 } from "../constants/RouteConstants";
 import axiosInstance from "./axiosInstance";
 
+const API_URL = "http://localhost:8080/api/auth";
+
 export const signIn = async (username, password) => {
 	const response = await axiosInstance.post(SIGNIN_PROD, {
 		username: username,
@@ -25,6 +27,12 @@ export const signIn = async (username, password) => {
 	});
 	return response;
 };
+
+export const register = async (data: any) => {
+  //return axios.post(`${API_URL}/signup`, data);
+  const response=  await axiosInstance.post(`${API_URL}/signup`, data);
+};
+
 
 export const addAppointment = async (appointment) => {
 	const res = await axiosInstance.post(ADD_APPOINTMENT_PROD, appointment);
@@ -88,6 +96,7 @@ export async function getDoctorByEmail(email: any) {
 		const res = await axiosInstance.get(`${GET_DOCTOR_BY_EMAIL_PROD}/${email}`);
 		return res;
 	} catch (e) {
+	console.error(e);
 		console.log(e);
 	}
 }
@@ -97,6 +106,7 @@ export async function getPatientByEmail(email: any) {
 		const res = await axiosInstance.get(`${GET_PATIENT_BY_EMAIL_PROD}/${email}`);
 		return res;
 	} catch (e) {
+	console.error(e);
 		console.log(e);
 	}
 }

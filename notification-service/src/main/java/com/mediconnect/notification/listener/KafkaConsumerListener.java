@@ -21,7 +21,8 @@ public class KafkaConsumerListener {
 	@Autowired
 	private EmailService emailService;
 
-	@KafkaListener(topics = "#{'${spring.kafka.topic.name}'}")
+	@KafkaListener( topics = "${spring.kafka.topic.name}",
+			groupId = "${spring.kafka.consumer.group-id}")
 	public void listen(String message) {
 		try {
 

@@ -1,6 +1,7 @@
 package com.mediconnect.auth.payload.request;
 import java.util.Set;
 
+import com.mediconnect.auth.client.PatientRequest;
 import jakarta.validation.constraints.*;
 public record SignupRequest(
         @NotBlank(message = "Username must not be blank.")
@@ -12,8 +13,6 @@ public record SignupRequest(
         @Email(message = "Invalid email format.")
         String email,
 
-        @NotNull(message = "Roles must not be null.")
-        @Size(min = 1, message = "At least one role must be specified.")
         Set<String> roles,
 
         @NotBlank(message = "Password must not be blank.")
@@ -22,5 +21,7 @@ public record SignupRequest(
                 regexp = "^(?=.*[A-Z])(?=.*[@$!%*?&#])(?=.*\\d)[A-Za-z\\d@$!%*?&#]{6,40}$",
                 message = "Password must include at least one uppercase letter, one number, and one special character."
         )
-        String password
+        String password,
+
+        PatientRequest patientRequest
 ) {}

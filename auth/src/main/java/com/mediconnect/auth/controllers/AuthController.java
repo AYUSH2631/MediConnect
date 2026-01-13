@@ -29,6 +29,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         MessageResponse response = authService.registerUser(signUpRequest);
 
+
         if (response.message().startsWith("Error:")) {
             return ResponseEntity.badRequest().body(response);
         }

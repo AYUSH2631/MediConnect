@@ -5,6 +5,8 @@ import com.mediconnect.auth.Models.User;
 import com.mediconnect.auth.Models.UserRole;
 import com.mediconnect.auth.Repository.RoleRepository;
 import com.mediconnect.auth.Repository.UserRepository;
+import com.mediconnect.auth.client.PatientClient;
+import com.mediconnect.auth.client.PatientRequest;
 import com.mediconnect.auth.payload.request.LoginRequest;
 import com.mediconnect.auth.payload.request.SignupRequest;
 import com.mediconnect.auth.payload.response.JwtResponse;
@@ -42,6 +44,9 @@ public class AuthService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private PatientClient patientClient;
 
 
     public JwtResponse authenticateUser(LoginRequest loginRequest) {
@@ -100,8 +105,35 @@ public class AuthService {
         }
 
         user.setRoles(roles);
+        try {
+            userRepository.save(user);
+            boolean isPatient = roles.stream()
+                    .anyMatch(r -> UserRole.ROLE_PATIENT.equals(r.getName()));
+
+            if (isPatient) {
+                if (signUpRequest.patientRequest() == null) {
+                    throw new RuntimeException("Patient details are required for patient signup");
+                }
+                PatientRequest patientRequest = new PatientRequest(signUpRequest.patientRequest().getFirstName(),
+                        signUpRequest.patientRequest().getLastName(),
+                        signUpRequest.patientRequest().getEmail(),
+                        signUpRequest.patientRequest().getPhone(),
+                        signUpRequest.patientRequest().getAge());
+                patientClient.createPatient(patientRequest);
+            }
+
+            return new MessageResponse("User registered successfully!");
+        }
+        catch (Exception e){
+            userRepository.delete(user);
+            return new MessageResponse("Signup failed. Patient creation failed");
+        }
+        /*Role patientRole = roleRepository.findByName(UserRole.ROLE_PATIENT)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+
+        user.setRoles(Set.of(patientRole));
         userRepository.save(user);
 
-        return new MessageResponse("User registered successfully!");
+        return new MessageResponse("User registered successfully!");*/
     }
 }

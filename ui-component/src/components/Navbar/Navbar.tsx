@@ -5,16 +5,13 @@ import { AuthContext } from "../../auth/AuthContext";
 
 // Navbar Component: Displays navigation links and user info based on role
 const Navbar = () => {
-  // State to store the current user's role
   const [currentRole, setCurrentRole] = useState<any>("");
 
-  // Accessing the current user and logout function from AuthContext
   const { user, logout } = useContext<any>(AuthContext);
 
-  // Fetch the user's role from localStorage on component mount
   useEffect(() => {
     const userRole = localStorage.getItem("userRole");
-    setCurrentRole(userRole); // Update the state with the retrieved role
+    setCurrentRole(userRole);
   }, []);
   return (
     <div className="navbar-wrapper d-flex justify-content-between align-items-center bg-dark px-3">

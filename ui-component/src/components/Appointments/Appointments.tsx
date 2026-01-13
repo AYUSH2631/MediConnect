@@ -12,7 +12,10 @@ const Appointments = () => {
     const [updateModal, setUpdateModal] = useState(false);
     const [currentRole, setCurrentRole] = useState<any>("");
     const { setShowSpinner } = useContext(spinnerContext);
-    const user: any = JSON.parse(localStorage.getItem("user") || "{}");
+    const userRaw = localStorage.getItem("user");
+    const user = userRaw ? JSON.parse(userRaw) : null;
+    if (!user || !user.id) return null;
+
     console.log(user);
 
     useEffect(() => {

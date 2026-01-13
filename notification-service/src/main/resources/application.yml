@@ -9,14 +9,14 @@ spring:
         instance:
           name: Notification Service
           service-url: http://localhost:8085
-        url: http://localhost:8080
+        url: http://localhost:8081
         auto-registration: true
 
   kafka:
     consumer:
       bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
-      group-id: mygroupid
-      auto-offset-reset: latest
+      group-id: notification-group
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 

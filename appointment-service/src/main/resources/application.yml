@@ -12,12 +12,12 @@ spring:
         instance:
           name: Appointment Service
           service-url: http://localhost:8084
-        url: http://localhost:8080
+        url: http://localhost:8081
         auto-registration: true
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/appointmentdb
+      uri:mongodb://localhost:27017/appointmentdb
 
   kafka:
     producer:
@@ -52,14 +52,14 @@ server:
 
 doctor:
   service:
-    url: http://doctor-service:8083/api/v1/doctor
+    url: http://localhost:8083/api/v1/doctor
     data:
       mongodb:
         uri: mongodb://localhost:27017/doctordb
 
 patient:
   service:
-    url: http://patient-service:8082/api/v1/patient
+    url: http://localhost:8082/api/v1/patient
   data:
     mongodb:
       uri:mongodb://localhost:27017/patientdb

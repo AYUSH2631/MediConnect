@@ -9,7 +9,7 @@ spring:
         instance:
           name: Doctor Service
           service-url: http://localhost:8083
-        url: http://localhost:8080
+        url: http://localhost:8081
         auto-registration: true
 
   data:

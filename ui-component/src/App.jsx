@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import { Route, Routes } from "react-router-dom";
 import AuthProvider from "./auth/AuthProvider";
 import SpinnerProvider from "./components/Spinner/SpinnerProvider";
+import Signup from "./pages/SignUp/Signup";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             ></Route>
             {/* Login route for users to sign in */}
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />} />
             {/* Unauthorized route for users trying to access restricted pages */}
             <Route path="/unauthorized" element={<Unauthorized />}></Route>
             {/* Route to add a new doctor, only accessible by admins */}
